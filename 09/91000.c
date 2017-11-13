@@ -34,7 +34,9 @@ int main()
         }
         for (j = 0; j < nextAlloc; j++)
         {
-            printf("%d ", numbers[j]);
+            printf("%d", numbers[j]);
+            if (j != nextAlloc - 1)
+                printf(" ");
         }
         printf("\n");
     }

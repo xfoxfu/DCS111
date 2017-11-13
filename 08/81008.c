@@ -17,6 +17,9 @@ int main()
             return 0;
         }
     }
-    printf("Yes\n");
+    if (a != 1)
+        printf("Yes\n");
+    else
+        printf("No\n");
     return 0;
 }

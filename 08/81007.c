@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define _DEBUG
+#define DEBUG_
 
 int pow_(int x, int n)
 {
@@ -14,6 +14,8 @@ int pow_(int x, int n)
 }
 void incr(char *A, int digits)
 {
+    if (digits <= 0)
+        return;
     A[digits - 1]++;
     for (int i = digits - 1; i >= 0; i--)
     {
@@ -38,16 +40,17 @@ int toInt(char *A, int digits)
 int main()
 {
     int n;
-    scanf("%d", &n);
+    // scanf("%d", &n);
+    n = 6;
     char A[6] = {1, 0, 0, 0, 0, 0};
-    for (int i = 1; i <= pow(10, n) - 101; i++)
+    for (int i = pow_(10, n - 1); i <= pow_(10, n) - 1; i++)
     {
         int sum = 0;
         for (int j = 0; j < n; j++)
         {
             sum += pow_(A[j], n);
         }
-        if (sum == toInt(A, n))
+        if (sum == i)
             printf("%d\n", sum);
 #ifdef DEBUG
         else

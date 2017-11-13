@@ -2,9 +2,9 @@
 
 int main()
 {
-	char A[5];
+	char A[3];
 	scanf("%s", A);
-	for(int i=0;i<4;i++)
+	for (int i = 0; i < 3; i++)
 	{
 		A[i] -= 32;
 	}
