@@ -13,7 +13,7 @@
         "-g",
         "-Wall",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
+        "${workspaceFolder}/tmp"
       ],
       "presentation": {
         "echo": true,

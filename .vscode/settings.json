@@ -1,5 +1,12 @@
 {
   "files.exclude": {
-    "**/*.dSYM": true
-  }
+    "**/*.dSYM": true,
+    ".gitignore": true,
+    "tmp": true
+  },
+  "files.associations": {
+    "*.sql": "sql",
+    "stdio.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
 }
