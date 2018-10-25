@@ -6,7 +6,8 @@
   },
   "files.associations": {
     "*.sql": "sql",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "queue": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
