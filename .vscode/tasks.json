@@ -6,7 +6,7 @@
     {
       "label": "compile",
       "type": "shell",
-      "command": "clang",
+      "command": "clang++",
       "args": [
         "${relativeFile}",
         "-lm",

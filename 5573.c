@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int powb(int base, int n)
+int int_pow(int base, int n)
 {
     int res = 1;
     for (int i = 0; i < n; i++)
@@ -9,21 +9,21 @@ int powb(int base, int n)
 }
 int is_valid(int num, int n)
 {
-    int res = 0;
-    for (int numb = num; numb != 0; numb /= 10)
+    int sum = 0;
+    for (int num_remain = num; num_remain != 0; num_remain /= 10)
     {
-        int digit = numb % 10;
-        int add = powb(digit, n);
-        res += add;
+        int digit = num_remain % 10;
+        int add = int_pow(digit, n);
+        sum += add;
     }
-    return res == num;
+    return sum == num;
 }
 int main()
 {
     int n;
     scanf("%d", &n);
     // is_valid(153, n);
-    for (int i = powb(10, n - 1); i < powb(10, n); i++)
+    for (int i = int_pow(10, n - 1); i < int_pow(10, n); i++)
     {
         if (is_valid(i, n))
             printf("%d\n", i);
