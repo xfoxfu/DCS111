@@ -6,12 +6,13 @@
     {
       "label": "compile",
       "type": "shell",
-      "command": "clang++",
+      "command": "clang",
       "args": [
         "${relativeFile}",
         "-lm",
         "-g",
         "-Wall",
+        "-std=c99",
         "-o",
         "${workspaceFolder}/tmp"
       ],

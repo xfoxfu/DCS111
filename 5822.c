@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_ARR 100
+#define TYPE int
+#include "safe_iterator.c"
+
 #define DEBUG
 
 #ifdef DEBUG
@@ -9,64 +11,72 @@
 #define DEBUG_OUTPUT
 #endif
 
-void print_arr(int *start, int *end)
+void print_arr(Array arr)
 {
-    printf("%d", *start);
-    for (start++; start <= end; start++)
+    Iterator begin = array_begin(&arr);
+    Iterator end = array_end(&arr);
+    printf("%d", *iter_value_s(begin));
+    for (begin = iter_next(begin); iter_cmp(begin, end) <= 0; begin = iter_next(begin))
     {
-        printf(" %d", *start);
+        printf(" %d", *iter_value_s(begin));
     }
     printf("\n");
 }
 
-void merge_sort(int *start, int *end, int *arr_start, int *arr_end)
+void merge_sort(Iterator start, Iterator end, Array arr)
 {
-    if (start >= end)
+    if (iter_cmp(start, end) >= 0)
         return;
     else
     {
-        int *mid = start + (end - start) / 2; // (p + q) / 2;
-        merge_sort(start, mid, arr_start, arr_end);
-        merge_sort(mid + 1, end, arr_start, arr_end);
+        Iterator mid = iter_seek(start, iter_cmp(end, start) / 2); // (p + q) / 2;
+        merge_sort(start, mid, arr);
+        merge_sort(iter_next(mid), end, arr);
         // p .. r , r+1 .. q
-        int *buffer = calloc(end - start + 1, sizeof(*buffer));
+        Array buffer = array_new(iter_cmp(end, start) + 1);
         for (
-            int *cur_buf = buffer, *cur_left = start, *cur_right = mid + 1;
-            cur_buf - buffer <= end - start;
-            cur_buf++)
+            Iterator cur_buf = array_begin(&buffer),
+                     cur_left = start,
+                     cur_right = iter_next(mid);
+            iter_cmp(cur_buf, array_begin(&buffer)) <= iter_cmp(end, start);
+            cur_buf = iter_next(cur_buf))
         {
-            if (cur_left <= mid && cur_right <= end)
+            if (iter_cmp(cur_left, mid) <= 0 && iter_cmp(cur_right, end) <= 0)
             {
-                if (*cur_left <= *cur_right)
+                if (*iter_value_s(cur_left) <= *iter_value_s(cur_right))
                 {
-                    *cur_buf = *cur_left++;
+                    *iter_value_s(cur_buf) = *iter_value_s(cur_left);
+                    cur_left = iter_next(cur_left);
                 }
                 else
                 {
-                    *cur_buf = *cur_right++;
+                    *iter_value_s(cur_buf) = *iter_value_s(cur_right);
+                    cur_right = iter_next(cur_right);
                 }
             }
             else
             {
-                if (cur_left > mid)
+                if (iter_cmp(cur_left, mid) > 0)
                 {
-                    *cur_buf = *cur_right++;
+                    *iter_value_s(cur_buf) = *iter_value_s(cur_right);
+                    cur_right = iter_next(cur_right);
                 }
-                else if (cur_right > mid)
+                else if (iter_cmp(cur_right, mid) > 0)
                 {
-                    *cur_buf = *cur_left++;
+                    *iter_value_s(cur_buf) = *iter_value_s(cur_left);
+                    cur_left = iter_next(cur_left);
                 }
             }
         }
         for (
-            int *cur = buffer, *cur_arr = start;
-            cur - buffer <= end - start;
-            cur++, cur_arr++)
+            Iterator cur = array_begin(&buffer), cur_arr = start;
+            iter_cmp(cur, array_begin(&buffer)) <= iter_cmp(end, start);
+            cur = iter_next(cur), cur_arr = iter_next(cur_arr))
         {
-            *cur_arr = *cur;
+            *iter_value_s(cur_arr) = *iter_value_s(cur);
         }
-        free(buffer);
-        print_arr(arr_start, arr_end);
+        array_free(buffer);
+        print_arr(arr);
     }
 }
 
@@ -78,12 +88,12 @@ int main()
 #endif
     int n;
     scanf("%d", &n);
-    int *nums = calloc(n, sizeof *nums);
+    Array nums = array_new(n);
     for (int i = 0; i < n; i++)
     {
-        scanf("%d", nums + i);
+        scanf("%d", iter_value_s(array_at(&nums, i)));
     }
-    merge_sort(nums, nums + n - 1, nums, nums + n - 1);
-    free(nums);
+    merge_sort(array_begin(&nums), array_end(&nums), nums);
+    array_free(nums);
     return 0;
 }
