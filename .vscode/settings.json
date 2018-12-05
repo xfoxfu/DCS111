@@ -19,7 +19,11 @@
     "vector": "c",
     "algorithm": "c",
     "ios": "c",
-    "__tuple": "c"
+    "__tuple": "c",
+    "stack": "c",
+    "bitset": "c",
+    "chrono": "c",
+    "ratio": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

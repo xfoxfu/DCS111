@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#define LOCAL_MAIN
-#define DEBUG
+#define LOCAL_MAIN_
+#define DEBUG_
 
 #ifdef LOCAL_MAIN
 #include <stdio.h>
@@ -23,44 +23,47 @@ int max(int a, int b)
 {
     return a > b ? a : b;
 }
-short *plus(short *const lhs, short *const rhs)
+short *plus(short *lhs, short *rhs)
 {
     short *result;
 
-    short *lhs_end;
-    short *rhs_end;
-    for (lhs_end = lhs; *lhs_end >= 0; lhs_end++)
+    int i_lhs, i_rhs;
+    for (i_lhs = 0; lhs[i_lhs] >= 0; i_lhs++)
         ;
-    for (rhs_end = rhs; *rhs_end >= 0; rhs_end++)
+    for (i_rhs = 0; rhs[i_rhs] >= 0; i_rhs++)
         ;
+    i_lhs -= 1;
+    i_rhs -= 1;
 
-    int size = max(lhs_end - lhs, rhs_end - rhs) + 1;
-    result = calloc(size + 1, sizeof(*result));
+    int size = max(i_lhs, i_rhs) + 2;
+    result = malloc(sizeof(short) * (size + 1));
     // set last digit
-    short *res_end = result + size; // &result[size]
-    *res_end = -1;
-
-    for (
-        short *plhs = lhs_end - 1, *prhs = rhs_end - 1, *pres = res_end - 1;
-        res_end >= result && (plhs >= lhs || prhs >= rhs);
-        plhs--, prhs--, pres--)
+    int i_result = size;
+    result[i_result--] = -1;
+    // set all to zero
+    for (int i = 0; i <= i_result; i++)
     {
-        short l_add = plhs >= lhs ? *plhs : 0;
-        short r_add = prhs >= rhs ? *prhs : 0;
-        *pres += l_add + r_add;
-        if (*pres >= 10)
+        result[i] = 0;
+    }
+
+    for (; i_lhs >= 0 || i_rhs >= 0; i_lhs--, i_rhs--, i_result--)
+    {
+        short l_add = i_lhs >= 0 ? lhs[i_lhs] : 0;
+        short r_add = i_rhs >= 0 ? rhs[i_rhs] : 0;
+        result[i_result] += l_add + r_add;
+        if (result[i_result] >= 10) // BUG
         {
-            *(pres - 1) = *pres / 10;
-            *pres %= 10;
+            result[i_result - 1] = result[i_result] / 10;
+            result[i_result] %= 10;
         }
     }
-    if (result[0])
+    if (result[0]) // BUG
     {
         return result;
     }
     else
     {
-        short *result_part = calloc(size, sizeof(*result_part));
+        short *result_part = malloc(size * sizeof(short));
         memcpy(result_part, result + 1, size * sizeof(short));
         free(result);
         return result_part;

@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TYPE int
-#include "safe_iterator.c"
-
 #define DEBUG
 
 #ifdef DEBUG
 #define DEBUG_IO
 #define DEBUG_OUTPUT
 #endif
+
+#define TYPE int
+#define SAFE_WARNING
+#include "safe_iterator.c"
 
 void print_arr(Array arr)
 {
