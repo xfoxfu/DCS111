@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "safe_iterator.h"
 
 typedef struct
 {

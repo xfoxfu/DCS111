@@ -23,7 +23,8 @@
     "stack": "c",
     "bitset": "c",
     "chrono": "c",
-    "ratio": "c"
+    "ratio": "c",
+    "utility": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }
