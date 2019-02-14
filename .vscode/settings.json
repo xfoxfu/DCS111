@@ -4,6 +4,7 @@
     ".gitignore": true,
     "tmp": true
   },
+  "explorer.sortOrder": "mixed",
   "files.associations": {
     "*.sql": "sql",
     "stdio.h": "c",
@@ -24,7 +25,19 @@
     "bitset": "c",
     "chrono": "c",
     "ratio": "c",
-    "utility": "c"
+    "utility": "c",
+    "__functional_base": "c",
+    "atomic": "c",
+    "functional": "c",
+    "limits": "c",
+    "memory": "c",
+    "system_error": "c",
+    "tuple": "c",
+    "type_traits": "c",
+    "locale": "c",
+    "random.h": "c",
+    "cdefs.h": "c",
+    "list.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

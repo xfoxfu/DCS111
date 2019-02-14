@@ -8,7 +8,7 @@
       "type": "shell",
       "command": "clang",
       "args": [
-        "${relativeFile}",
+        "${fileDirname}/${fileBasenameNoExtension}{,/*}${fileExtname}(N)",
         "-lm",
         "-g",
         "-Wall",
