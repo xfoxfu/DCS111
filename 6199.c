@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define IO_REDIR
-
 typedef struct
 {
     short digits[2002];
@@ -20,14 +18,7 @@ BigInt read_bigint()
         result.digits[result.digit_count++] = str[i] - '0';
     return result;
 }
-BigInt llu2bigint(unsigned long long num)
-{
-    BigInt result;
-    result.digit_count = 0;
-    for (; num != 0; num /= 10)
-        result.digits[result.digit_count++] = num % 10;
-    return result;
-}
+
 void print_bigint(BigInt num)
 {
     for (int i = num.digit_count - 1; i >= 0; i--)
@@ -67,7 +58,6 @@ BigInt multiply_single(BigInt lhs, short rhs, short prepend)
     }
     if (result.digits[result.digit_count] != 0)
         result.digit_count++;
-    // print_bigint(result); // debug
     return result;
 }
 BigInt multiply(BigInt lhs, BigInt rhs)
@@ -84,16 +74,8 @@ BigInt multiply(BigInt lhs, BigInt rhs)
 
 int main()
 {
-#ifdef IO_REDIR
-    freopen("6199.in", "r", stdin);
-    freopen("6199.out", "w", stdout);
-#endif
     BigInt lhs = read_bigint();
     BigInt rhs = read_bigint();
-    // print_bigint(lhs);
-    // print_bigint(rhs);
-    // print_bigint(add(lhs, rhs));
-    // print_bigint(multiply_single(lhs, 2, 5));
     print_bigint(multiply(lhs, rhs));
     return 0;
 }
